@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Todo extends Model
 {
-    protected $fillable = ['user_id','title','completed','icon_path','user_id'];
+    protected $fillable = ['user_id','title','completed','icon_path'];
     protected $casts    = ['completed'=>'boolean'];
     //protected $table = 'to_dos';
 
@@ -16,5 +16,5 @@ class Todo extends Model
     {
         return $this->belongsTo(User::class);
     }
-    
+
 }

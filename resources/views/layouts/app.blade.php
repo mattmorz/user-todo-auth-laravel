@@ -16,7 +16,15 @@
             <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
           @else
-            <li class="nav-item"><a class="nav-link" href="{{ route('profile.edit') }}">Profile</a></li>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ auth()->user()->name }}
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Role:{{ auth()->user()->is_admin ? 'Admin':'Worker' }}</a></li>
+                <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Change Password</a></li>
+              </ul>
+            </div>
             <li class="nav-item">
               <form method="POST" action="{{ route('logout') }}">
                 @csrf
@@ -35,7 +43,7 @@
       @endif
       @yield('content')
     </div>
-    
+
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}" ></script>
   </body>
 </html>

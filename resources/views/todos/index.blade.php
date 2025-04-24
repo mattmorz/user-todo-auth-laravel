@@ -34,11 +34,13 @@
                     @if($todo->user_id===auth()->id())
                     <a href="{{ route('todos.edit', $todo->id) }}" class="btn btn-primary btn-sm" role="button"> Edit</a>
                     @endif
+                    @if(auth()->user()->is_admin)
                     <form action="{{ route('todos.destroy',$todo->id)}}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to Delete this?');">Delete</button>
                     </form>
+                    @endif
                 </span>
                 
                 @endauth
