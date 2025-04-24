@@ -28,7 +28,7 @@ class AuthController extends Controller
             'password' => Hash::make($r->password),
         ]);
 
-        return redirect()->route('login')->with('success','Registered—please log in.');
+        return redirect()->route('login')->with('status','Registered—please log in.');
     }
 
     public function showLoginForm()

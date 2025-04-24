@@ -28,6 +28,6 @@ class ProfileController extends Controller
         }
         $user->save();
 
-        return back()->with('success','Profile updated');
+        return back()->with('status','Profile updated');
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\ToDo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ToDoDeletedMail;
 
 class ToDoController extends Controller
 {
@@ -68,17 +70,19 @@ class ToDoController extends Controller
     }
 
     public function destroy(int $id){
-        $todo = ToDo::findOrFail($id);
-        $owner = $todo->user;
-        $title = $todo->title;
+        $todo = ToDo::with('user')->findOrFail($id);
 
         if($todo->icon_path && \Storage::disk('public')->exists($todo->icon_path)){
             \Storage::disk('public')->delete($todo->icon_path);
         }
         
+        if ($todo->user && $todo->user->email) {
+            Mail::to($todo->user->email)->send(new ToDoDeletedMail($todo));
+        }
+    
         $todo->delete();
 
 
-        return redirect()->route('todos.index')->with('success', "ToDo “{$title}” deleted and owner notified.");  
+        return redirect()->route('todos.index')->with('status', "ToDo “{$todo->title}” deleted and owner notified.");  
     }
 }

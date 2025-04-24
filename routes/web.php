@@ -17,7 +17,6 @@ Route::get ('/login',[AuthController::class,'showLoginForm'])->name('login');
 Route::post('/login',[AuthController::class,'login']);
 
 
-
 // Auth-protected for create, store, edit, update
 Route::middleware('auth')->group(function () {
     Route::get('todos/create',  [TodoController::class, 'create'])->name('todos.create');
